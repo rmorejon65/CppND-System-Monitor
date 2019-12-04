@@ -18,6 +18,7 @@ const std::string kVersionFilename{"/version"};
 const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
+
 // System
 float MemoryUtilization();
 long UpTime();
@@ -41,6 +42,14 @@ enum CPUStates {
   kGuestNice_
 };
 std::vector<std::string> CpuUtilization();
+
+struct CpuKPI {
+  long idleTime;
+  long totalTime;
+};
+
+static std::vector<CpuKPI> previousVector;
+std::vector<CpuKPI> CpuUtilPercentage();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);
@@ -52,6 +61,14 @@ std::string Ram(int pid);
 std::string Uid(int pid);
 std::string User(int pid);
 long int UpTime(int pid);
+float CpuUtilization(int pid);
+
+struct CpuProcessInfo {
+  float totalTime;
+  float seconds;
+};
+
+CpuProcessInfo GetProcessCpuInfo(int pid);
 };  // namespace LinuxParser
 
 #endif
